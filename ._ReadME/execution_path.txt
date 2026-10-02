@@ -1,0 +1,16 @@
+step1 : open terminal in folder directory
+step2 : run - node server.js
+step3 : open postman and select POST http method and paste the local host url from terminal.
+step4 : move to body section, select (raw) and enter user info in json format
+         {
+            "username":"xxxx",
+            "password":"yyyy",
+            "role":"student or faculty or admin"(only one should be given).
+         }
+step5 : now add '/register' at end of url and click send.
+step6 : you get 201 status and a jwt token.
+step7 : copy the token and paste it in the authorization section left to body (from drop down list select the bearrer token and paste it).
+step8 : without changing any settings remove '/register' and add '/login' at end of the url and click send.
+step9 : you get 200 ok status. which means u r logged in.
+step10 : change POST to GET http method and remove '/login' and add '/student' or '/faculty' or 'admin' at end of the url and click send.
+step11 : according to ur role u r registerd with the response will be generated.

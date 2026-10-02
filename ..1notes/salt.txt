@@ -1,0 +1,30 @@
+In cryptographhy and password security, salt and salt rounds refer to two key concepts:
+
+what is salt:
+salt is a unique,randomly genrated string of bits added to password before it gets passed thorugh a hashing function.
+
+without salt -> Hash = hash("secret123")
+with salt    -> Hash = hash("secret123"+"r8$kL9@z")
+
+why salt necessary ?
+-> prevents the Rainbow table attacks
+   hackers precompute the list of containing billons of common passwords alongside thier resulting values
+-> prevents identical hashes for identical passwords
+   if two users happen to choose same password as thier password,plain hashing makes thier database eniterly look identical.with salt they will look diff.
+
+why saltRounds ?
+-> In bcrypt.hash(password,10) -> 10 specifies saltrounds(cost factor)
+-> Salt rounds determine how many iterations (2^cost) the hashing algo runs.
+->a cost factor of 10 means bcrypt processes the hashing loop 2^10 times
+
+
+
+sample password after hashing with salt->
+
+$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
+│  │  │                     │
+│  │  │                     └─► 31-character Final Password Hash
+│  │  └───────────────────────► 22-character Salt
+│  └──────────────────────────► Cost Factor (10 rounds = 2^10 iterations)
+└─────────────────────────────► Algorithm Version (bcrypt)
+

@@ -1,0 +1,59 @@
+mainly this is for the understanding of the two key concepts ->
+
+1.AUTHENTICATION - WHO YOU ARE
+   verifies the user creds and gives a JWT(json web token) containing the userid and role.
+2.AUTHERIZATION - ARE U ALLOWED HERE.  
+   checks the role embedded in the token and verifies whether it does match to the routes policy.
+
+
+WORK FLOW:
+
+            Incoming Request 
+               │
+               ▼
+            [authMiddleware]  ──(Invalid/Missing Token?)──► 401 Unauthorized
+               │ (Valid: attaches req.user)
+               ▼
+            [roleMiddleware]  ──(Role Not Allowed?)───────► 403 Forbidden
+               │ (Allowed)
+               ▼
+            [Route Handler]   ───────────────────────────► 200 OK + Route Data
+
+There are mainly 3 modules :
+   1.Token Authentication
+   2.Role Based Autherization
+   3.Protected Routes
+
+
+1.TOKEN AUTHENTICATION (authMiddleware.js) ->
+   This middleware acts as security gatekeeper for any private route.
+   It ensures that an incoming request possesses a vaild,unexpired token signed by our server
+
+   refer the authMiddleware.js file for the explanation of the code.
+
+2.ROLE BASED AUTHERIZATION (roleMiddleware.js) ->
+   This module controls permissions based on user roles.
+   (RBAC - Role Based Access Control)
+   It is written as higher order function [a function which returns middleware function]
+   so it can accept the custom role args when defining routes.
+
+   refer the roleMiddleware.js file for the explanation of the code.
+
+3.PROTECTED ROUTES (protectedRoutes.js) ->
+   this file grps the protected endpoints together using express.Router() and chains the middleware onto individual routes.
+   
+   refer the protectedRoutes.js file for the explanation of the code.
+
+
+Now the key backend part the server.js file ->
+
+   This server.js file serves as the self-contained backend entry point that ties together password hashing, JWT generation, middleware protection, and role-based routes.
+
+   1.setup,configure and state
+   2.user regestration
+   3.user Authentication
+   4.middleware handlers
+   5.role guarded endpoints
+   6.static asset serving & server boost
+
+   refer the server.js file for the explanation of the code.
